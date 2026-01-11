@@ -1,0 +1,370 @@
+.dashboard-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: lightgray;
+}
+
+.dashboard-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.dashboard-main {
+	flex: 1;
+	padding: 1rem;
+	max-width: 75rem;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.controls {
+	display: flex;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.search-input,
+.filter-select,
+.action-btn {
+	padding: 0.5rem 0.6rem;
+	border-radius: 0.4rem;
+	border: 0.06rem solid lightgray;
+	background: white;
+}
+
+.products-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.products-table th,
+.products-table td {
+	padding: 0.75rem 0.6rem;
+	border-bottom: 0.06rem solid lightgray;
+	text-align: left;
+}
+
+.status-badge {
+	display: inline-block;
+	padding: 0.25rem 0.5rem;
+	border-radius: 62.4rem;
+	font-size: 0.85rem;
+}
+
+.center {
+	text-align: center;
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.username {
+	font-weight: 600;
+	font-size: 1rem;
+}
+
+.role {
+	padding: 0.4rem 0.8rem;
+	border-radius: 1.3rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: white;
+}
+
+.logout-btn {
+	padding: 0.6rem 1.2rem;
+	background-color: lightgray;
+	color: white;
+	border: 0.13rem solid white;
+	border-radius: 0.3rem;
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.3s ease;
+}
+
+.dashboard-main {
+	flex: 1;
+	padding: 2rem;
+	max-width: 75rem;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.message {
+	padding: 1rem 1.5rem;
+	border-radius: 0.3rem;
+	margin-bottom: 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.error-message {
+	background-color: lightcoral;
+	color: darkred;
+	border-left: 0.25rem solid red;
+}
+
+.success-message {
+	background-color: lightgreen;
+	color: green;
+	border-left: 0.25rem solid green;
+}
+
+.close-btn {
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+	color: inherit;
+}
+
+.controls-section {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+	gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.search-filter {
+	display: flex;
+	gap: 1rem;
+	flex: 1;
+	min-width: 18.8rem;
+}
+
+.search-input,
+.filter-select {
+	padding: 0.75rem;
+	border: 0.06rem solid lightgray;
+	border-radius: 0.3rem;
+	font-size: 0.95rem;
+	background-color: white;
+}
+
+.search-input {
+	flex: 2;
+	min-width: 12.5rem;
+}
+
+.filter-select {
+	flex: 1;
+	min-width: 9.4rem;
+}
+
+.add-product-btn {
+	padding: 0.75rem 1.5rem;
+	background: blue;
+	color: white;
+	border: none;
+	border-radius: 0.3rem;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.products-section {
+	background: white;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	box-shadow: 0 0.13rem 0.5rem gray;
+}
+
+.no-products {
+	padding: 2rem;
+	text-align: center;
+	color: gray;
+	font-size: 1.1rem;
+}
+
+.loading {
+	padding: 2rem;
+	text-align: center;
+	color: blue;
+	font-size: 1.1rem;
+	font-weight: 600;
+}
+
+.products-table thead {
+	background-color: whitesmoke;
+	border-bottom: 0.13rem solid lightgray;
+}
+
+.products-table th {
+	padding: 1rem;
+	text-align: left;
+	font-weight: 600;
+	color: black;
+	font-size: 0.95rem;
+}
+
+.products-table td {
+	padding: 1rem;
+	border-bottom: 0.06rem solid lightgray;
+	color: gray;
+}
+
+.products-table tbody tr:hover {
+	background-color: whitesmoke;
+}
+
+.status-badge {
+	display: inline-block;
+	padding: 0.4rem 0.8rem;
+	border-radius: 1.3rem;
+	color: white;
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.actions {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.action-btn {
+	padding: 0.5rem 1rem;
+	border: none;
+	border-radius: 0.25rem;
+	cursor: pointer;
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.edit-btn {
+	background-color: dodgerblue;
+	color: white;
+}
+
+.delete-btn {
+	background-color: red;
+	color: white;
+}
+
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 62.5rem;
+}
+
+.modal {
+	background: white;
+	border-radius: 0.5rem;
+	box-shadow: 0 0.6rem 2.5rem black;
+	max-width: 31.3rem;
+	width: 90%;
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	border-bottom: 0.06rem solid lightgray;
+}
+
+.modal-header h2 {
+	margin: 0;
+	color: black;
+}
+
+.close-modal-btn {
+	background: none;
+	border: none;
+	font-size: 1.8rem;
+	cursor: pointer;
+	color: gray;
+}
+
+.modal-form {
+	padding: 1.5rem;
+}
+
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: gray;
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+	width: 100%;
+	padding: 0.75rem;
+	border: 0.06rem solid lightgray;
+	border-radius: 0.3rem;
+	font-size: 0.95rem;
+	box-sizing: border-box;
+}
+
+.product-info {
+	margin: 0.5rem 0 0 0;
+	color: gray;
+	font-size: 0.9rem;
+}
+
+.modal-actions {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1.5rem;
+}
+
+.btn-submit,
+.btn-confirm-delete {
+	flex: 1;
+	padding: 0.75rem;
+	background: blue;
+	color: white;
+	border: none;
+	border-radius: 0.3rem;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.btn-confirm-delete {
+	background: red;
+}
+
+.btn-cancel {
+	flex: 1;
+	padding: 0.75rem;
+	background-color: lightgray;
+	color: gray;
+	border: none;
+	border-radius: 0.3rem;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.modal-confirm {
+	max-width: 25rem;
+}
+
+.confirm-message {
+	padding: 1.5rem;
+	text-align: center;
+	color: gray;
+	font-size: 1rem;
+	margin: 0;
+}

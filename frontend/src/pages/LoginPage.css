@@ -1,0 +1,51 @@
+.login-box {
+	background: #fff;
+	padding: 2rem;
+	border-radius: 0.6rem;
+
+	.login-container {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		background: #fff;
+	}
+
+	.login-box {
+		width: 100%;
+		max-width: 23.8rem;
+		background: #fff;
+		padding: 1.3rem;
+		border-radius: 0.5rem;
+	}
+
+	.form-group {
+		margin-bottom: 0.8rem;
+	}
+
+	.form-group label {
+		display: block;
+		margin-bottom: 0.4rem;
+		font-weight: 600;
+	}
+
+	.form-group input {
+		width: 100%;
+		padding: 0.6rem;
+		border: 0.1rem solid #fff;
+		border-radius: 0.3rem;
+	}
+
+	.login-btn {
+		width: 100%;
+		padding: 0.6rem;
+		border-radius: 0.3rem;
+	}
+}
+
+@media (max-width: 30rem) {
+	.login-box {
+		padding: 1rem;
+	}
+}
