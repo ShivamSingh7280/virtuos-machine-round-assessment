@@ -104,6 +104,42 @@ export const ProductProvider = ({ children }) => {
 		[products]
 	);
 
+	const updateProductPrice = useCallback(
+		async (token, id, price) => {
+			setLoading(true);
+			setError(null);
+			setSuccessMessage(null);
+			try {
+				const response = await fetch(
+					`http://localhost:5000/api/products-price/${id}`,
+					{
+						method: "PUT",
+						headers: {
+							Authorization: `Bearer ${token}`,
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ price }),
+					}
+				);
+
+				if (![200, 201].includes(response?.status)) {
+					const errorData = await response?.json();
+					throw new Error(errorData?.message || "Failed to update product");
+				}
+
+				const data = await response?.json();
+				setProducts(products.map((p) => (p?.id === id ? data : p)));
+				setSuccessMessage("Product Price updated successfully");
+				setLoading(false);
+				return data;
+			} catch (error) {
+				setLoading(false);
+				setError(error.message || "Error found while updating.");
+			}
+		},
+		[products]
+	);
+
 	const deleteProduct = useCallback(
 		async (token, id) => {
 			setLoading(true);
@@ -148,6 +184,7 @@ export const ProductProvider = ({ children }) => {
 		deleteProduct,
 		setError,
 		setSuccessMessage,
+		updateProductPrice,
 	};
 
 	return (

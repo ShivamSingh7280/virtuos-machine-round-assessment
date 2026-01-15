@@ -196,6 +196,39 @@ app.put("/api/products/:id", authenticateToken, authorizeAdmin, (req, res) => {
 	res.status(200).json(product);
 });
 
+// PUT /api/products/:id - Update product price (admin only)
+app.put(
+	"/api/products-price/:id",
+	authenticateToken,
+	authorizeAdmin,
+	(req, res) => {
+		const { id } = req.params;
+		const { price } = req.body;
+
+		// Validation
+		if (price === undefined) {
+			return res.status(400).json({ message: "Quantity is required" });
+		}
+
+		if (typeof price !== "number" || price < 0) {
+			return res
+				.status(400)
+				.json({ message: "price must be a positive number" });
+		}
+
+		const product = products.find((p) => p.id === parseInt(id));
+
+		if (!product) {
+			return res.status(404).json({ message: "Product not found" });
+		}
+
+		product.price = price;
+		updateProductStatus(product);
+
+		res.status(200).json(product);
+	}
+);
+
 // DELETE /api/products/:id - Delete product (admin only)
 app.delete(
 	"/api/products/:id",

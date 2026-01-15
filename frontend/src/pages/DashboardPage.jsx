@@ -31,6 +31,9 @@ import {
 	FormControl,
 	InputLabel,
 	Tooltip,
+	Stepper,
+	Step,
+	StepLabel,
 } from "@mui/material";
 
 const DashboardPage = () => {
@@ -47,6 +50,7 @@ const DashboardPage = () => {
 		deleteProduct,
 		setError,
 		setSuccessMessage,
+		updateProductPrice,
 	} = useContext(ProductContext);
 
 	// states:
@@ -64,6 +68,11 @@ const DashboardPage = () => {
 		quantity: "",
 	});
 	const [editQuantity, setEditQuantity] = useState("");
+
+	const [editingPriceId, setEditingPriceId] = useState(null);
+	const [editPrice, setEditPrice] = useState("");
+
+	const [isNextClick, setIsNextClick] = useState(false);
 
 	// functions:
 
@@ -133,6 +142,22 @@ const DashboardPage = () => {
 		}
 	};
 
+	const _handleEditPrice = async () => {
+		if (+editPrice < 0) {
+			setError("Please enter a valid price");
+			return;
+		}
+
+		try {
+			await updateProductPrice(token, editingPriceId, parseFloat(editPrice));
+			setEditingPriceId(null);
+			setEditPrice("");
+			setTimeout(() => setSuccessMessage(null), 3000);
+		} catch (error) {
+			console.log("Error found in _handleEditPrice: ", error);
+		}
+	};
+
 	const _handleDeleteProduct = async () => {
 		try {
 			console.log(token, selectedProduct);
@@ -165,6 +190,19 @@ const DashboardPage = () => {
 		if (!token) return;
 		fetchProducts(token);
 	}, [token]);
+
+	const _handleNextClick = () => {
+		if (!formData?.name || !formData?.category) {
+			setError("All fields are required");
+			return;
+		} else {
+			setIsNextClick(true);
+		}
+	};
+
+	const _handlePreviousClick = () => {
+		setIsNextClick(false);
+	};
 
 	return (
 		<Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -310,9 +348,28 @@ const DashboardPage = () => {
 												sx={{ "&:hover": { backgroundColor: "#fff" } }}>
 												<TableCell>{product?.name}</TableCell>
 												<TableCell>{product?.category}</TableCell>
+
 												<TableCell align="right">
-													${product?.price?.toFixed(2)}
+													{editingPriceId === product.id ? (
+														<input
+															autoFocus
+															value={editPrice}
+															onChange={(e) => setEditPrice(e.target.value)}
+															onBlur={_handleEditPrice}
+															style={{ width: "80px" }}
+														/>
+													) : (
+														<span
+															onClick={() => {
+																setEditingPriceId(product.id);
+																setEditPrice(product.price.toFixed(2));
+															}}
+															style={{ cursor: "pointer" }}>
+															${product.price.toFixed(2)}
+														</span>
+													)}
 												</TableCell>
+
 												<TableCell align="center">
 													{product?.quantity}
 												</TableCell>
@@ -374,53 +431,85 @@ const DashboardPage = () => {
 
 			<Dialog open={showAddModal} onClose={() => setShowAddModal(false)}>
 				<DialogTitle>Add New Product</DialogTitle>
+
 				<DialogContent sx={{ minWidth: 360, pt: 2 }}>
-					<TextField
-						fullWidth
-						label="Product Name"
-						value={formData?.name}
-						onChange={(e) =>
-							setFormData({ ...formData, name: e?.target?.value })
-						}
-						margin="normal"
-					/>
-					<TextField
-						fullWidth
-						label="Category"
-						value={formData?.category}
-						onChange={(e) =>
-							setFormData({ ...formData, category: e?.target?.value })
-						}
-						margin="normal"
-					/>
-					<TextField
-						fullWidth
-						label="Price"
-						type="number"
-						inputProps={{ step: "0.01" }}
-						value={formData?.price}
-						onChange={(e) =>
-							setFormData({ ...formData, price: e?.target?.value })
-						}
-						margin="normal"
-					/>
-					<TextField
-						fullWidth
-						label="Quantity"
-						type="number"
-						value={formData?.quantity}
-						onChange={(e) =>
-							setFormData({ ...formData, quantity: e?.target?.value })
-						}
-						margin="normal"
-					/>
+					{/* Stepper */}
+					<Stepper
+						activeStep={isNextClick ? 1 : 0}
+						alternativeLabel
+						sx={{ mb: 2 }}>
+						<Step>
+							<StepLabel>Basic Info</StepLabel>
+						</Step>
+						<Step>
+							<StepLabel>Pricing</StepLabel>
+						</Step>
+					</Stepper>
+
+					{!isNextClick ? (
+						<>
+							<TextField
+								fullWidth
+								label="Product Name"
+								value={formData?.name}
+								onChange={(e) =>
+									setFormData({ ...formData, name: e.target.value })
+								}
+								margin="normal"
+							/>
+
+							<TextField
+								fullWidth
+								label="Category"
+								value={formData?.category}
+								onChange={(e) =>
+									setFormData({ ...formData, category: e.target.value })
+								}
+								margin="normal"
+							/>
+
+							<DialogActions sx={{ px: 0, mt: 2 }}>
+								<Button variant="contained" onClick={_handleNextClick}>
+									Next
+								</Button>
+								<Button onClick={() => setShowAddModal(false)}>Cancel</Button>
+							</DialogActions>
+						</>
+					) : (
+						<>
+							<TextField
+								fullWidth
+								label="Price"
+								type="number"
+								inputProps={{ step: "0.01" }}
+								value={formData?.price}
+								onChange={(e) =>
+									setFormData({ ...formData, price: e.target.value })
+								}
+								margin="normal"
+							/>
+
+							<TextField
+								fullWidth
+								label="Quantity"
+								type="number"
+								value={formData?.quantity}
+								onChange={(e) =>
+									setFormData({ ...formData, quantity: e.target.value })
+								}
+								margin="normal"
+							/>
+
+							<DialogActions sx={{ px: 0, mt: 2 }}>
+								<Button onClick={_handlePreviousClick}>Previous</Button>
+								<Button variant="contained" onClick={_handleAddProduct}>
+									Add Product
+								</Button>
+								<Button onClick={() => setShowAddModal(false)}>Cancel</Button>
+							</DialogActions>
+						</>
+					)}
 				</DialogContent>
-				<DialogActions>
-					<Button onClick={() => setShowAddModal(false)}>Cancel</Button>
-					<Button variant="contained" onClick={_handleAddProduct}>
-						Add Product
-					</Button>
-				</DialogActions>
 			</Dialog>
 
 			<Dialog open={showEditModal} onClose={() => setShowEditModal(false)}>
